@@ -1,6 +1,6 @@
 package com.a2.flightservice.configuration;
 
-import contoller.FilghtController;
+import controller.FlightController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -20,7 +20,7 @@ public class SwaggerConfiguration {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
-                .select().apis(RequestHandlerSelectors.basePackage(FilghtController.class.getPackage().getName()))
+                .select().apis(RequestHandlerSelectors.basePackage(FlightController.class.getPackage().getName()))
                 .build()
                 .apiInfo(metaData());
     }

@@ -13,8 +13,8 @@ public class Airplane {
     private String name;
     private int capacity;
 
-    /*@OneToMany(mappedBy = "airplane")
-    private List<Flight> flights;*/
+    @OneToMany(mappedBy = "airplane")
+    private List<Flight> flights;
 
     public Airplane(){}
 

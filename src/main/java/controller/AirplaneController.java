@@ -1,8 +1,7 @@
-package contoller;
+package controller;
 
 import dto.AirplaneCreateDto;
 import dto.AirplaneDto;
-import io.swagger.models.auth.In;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

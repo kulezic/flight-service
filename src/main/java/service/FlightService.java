@@ -1,4 +1,8 @@
 package service;
 
-public class FlightService {
+public interface FlightService {
+
+    Integer getFlightCapacityByFlightId(Long flightId);
+
+
 }

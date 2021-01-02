@@ -1,7 +1,7 @@
-package contoller;
+package controller;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class FilghtController {
+public class FlightController {
 }
