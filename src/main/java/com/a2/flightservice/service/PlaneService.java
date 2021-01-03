@@ -7,5 +7,5 @@ public interface PlaneService {
 
     PlaneDto addPlane(PlaneCreateDto planeCreateDto);
 
-    void deleteById(Long id);
+    void deletePlaneById(Long planeId);
 }

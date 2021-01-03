@@ -1,13 +1,12 @@
 package com.a2.flightservice.controller;
 
-import com.a2.flightservice.dto.AirplaneCreateDto;
-import com.a2.flightservice.dto.AirplaneDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.a2.flightservice.dto.PlaneCreateDto;
+import com.a2.flightservice.dto.PlaneDto;
+import com.a2.flightservice.service.PlaneService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.a2.flightservice.security.CheckSecurity;
-import com.a2.flightservice.service.AirplaneService;
 
 import javax.validation.Valid;
 
@@ -15,21 +14,23 @@ import javax.validation.Valid;
 @RequestMapping("/airplane")
 public class AirplaneController {
 
-    private AirplaneService airplaneService;
+    private PlaneService planeService;
 
-    public AirplaneController(AirplaneService airplaneService){ this.airplaneService = airplaneService;}
+    public AirplaneController(PlaneService planeService){
+        this.planeService = planeService;
+    }
 
 
     @PostMapping
     @CheckSecurity(roles = {"ROLE_ADMIN"})
-    public ResponseEntity<AirplaneDto> add(@RequestHeader("Authorization") String authorization, @RequestBody @Valid AirplaneCreateDto airplaneCreateDto) {
-        return new ResponseEntity<>(airplaneService.add(airplaneCreateDto), HttpStatus.CREATED);
+    public ResponseEntity<PlaneDto> add(@RequestHeader("Authorization") String authorization, @RequestBody @Valid PlaneCreateDto planeCreateDto) {
+        return new ResponseEntity<>(planeService.addPlane(planeCreateDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     @CheckSecurity(roles = {"ROLE_ADMIN"})
     public ResponseEntity<?> delete(@RequestHeader("Authorization") String authorization, @PathVariable("id") Long id) {
-        airplaneService.deleteById(id);
+        planeService.deletePlaneById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,33 +1,32 @@
 package com.a2.flightservice.dto;
 
-
-import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
-public class FlightCreateDto {
+public class FlightDto {
 
     private Long flightId;
     private String startDestination;
     private String endDestination;
     private Long miles;
     private BigDecimal price;
-    private Long planeId;
 
-    public FlightCreateDto() {
+    private Integer capacity;
+
+    public FlightDto() {
     }
 
-    public FlightCreateDto(Long flightId,
-                           String startDestination,
-                           String endDestination,
-                           Long miles,
-                           BigDecimal price,
-                           Long planeId) {
+    public FlightDto(Long flightId,
+                     String startDestination,
+                     String endDestination,
+                     Long miles,
+                     BigDecimal price,
+                     Integer capacity) {
         this.flightId = flightId;
         this.startDestination = startDestination;
         this.endDestination = endDestination;
         this.miles = miles;
         this.price = price;
-        this.planeId = planeId;
+        this.capacity = capacity;
     }
 
     public Long getFlightId() {
@@ -70,11 +69,11 @@ public class FlightCreateDto {
         this.price = price;
     }
 
-    public Long getPlaneId() {
-        return planeId;
+    public Integer getCapacity() {
+        return capacity;
     }
 
-    public void setPlaneId(Long planeId) {
-        this.planeId = planeId;
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
     }
 }

@@ -8,17 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class PlaneMapper {
 
-
-    public PlaneDto airplaneToAirplaneDto(Plane plane){
+    public PlaneDto planeToPlaneDto(Plane plane){
         PlaneDto planeDto = new PlaneDto();
         planeDto.setPlaneId(plane.getPlaneId());
         planeDto.setCapacity(plane.getCapacity());
         return planeDto;
-    }
-
-    public Plane airplaneCreateDtoToAirplane(PlaneCreateDto planeCreateDto){
-        Plane plane = new Plane();
-        plane.setCapacity(planeCreateDto.getCapacity());
-        return plane;
     }
 }
