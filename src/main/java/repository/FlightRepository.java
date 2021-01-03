@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FlightRepository extends JpaRepository<Flight,Integer> {
     Flight findByIdFlight(Long flightId);
+
+    void deleteByIdFlight(Long flightId);
 }

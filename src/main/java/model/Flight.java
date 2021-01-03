@@ -1,19 +1,19 @@
 package model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 public class Flight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idFlight;
+    private Long flightId;
 
     private String beginDestination;
     private String finalDestination;
-    private String duration;
-    //ili bolje string
-    private int price;
+    private Long miles;
+    private BigDecimal price;
 
     @ManyToOne
     private Airplane airplane;
@@ -21,17 +21,26 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(int idFlight, String beginDestination, String finalDestination, String duration, int price, Airplane airplane) {
-        this.idFlight = idFlight;
+    public Flight(Long flightId,
+                  String beginDestination,
+                  String finalDestination,
+                  Long miles,
+                  BigDecimal price,
+                  Airplane airplane) {
+        this.flightId = flightId;
         this.beginDestination = beginDestination;
         this.finalDestination = finalDestination;
-        this.duration = duration;
+        this.miles = miles;
         this.price = price;
         this.airplane = airplane;
     }
 
-    public int getIdFlight() {
-        return idFlight;
+    public Long getFlightId() {
+        return flightId;
+    }
+
+    public void setFlightId(Long flightId) {
+        this.flightId = flightId;
     }
 
     public String getBeginDestination() {
@@ -50,19 +59,19 @@ public class Flight {
         this.finalDestination = finalDestination;
     }
 
-    public String getDuration() {
-        return duration;
+    public Long getMiles() {
+        return miles;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setMiles(Long miles) {
+        this.miles = miles;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -73,4 +82,5 @@ public class Flight {
     public void setAirplane(Airplane airplane) {
         this.airplane = airplane;
     }
+
 }

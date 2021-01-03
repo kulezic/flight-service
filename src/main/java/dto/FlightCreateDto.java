@@ -3,14 +3,24 @@ package dto;
 import model.Airplane;
 
 import javax.persistence.ManyToOne;
+import java.math.BigDecimal;
 
 public class FlightCreateDto {
 
     private String beginDestination;
     private String finalDestination;
-    private String duration;
-    private int price;
-    private Integer idAirplane;
+    private Long miles;
+    private BigDecimal price;
+
+    public FlightCreateDto(String beginDestination, String finalDestination, Long miles, BigDecimal price) {
+        this.beginDestination = beginDestination;
+        this.finalDestination = finalDestination;
+        this.miles = miles;
+        this.price = price;
+    }
+
+    public FlightCreateDto() {
+    }
 
     public String getBeginDestination() {
         return beginDestination;
@@ -28,27 +38,19 @@ public class FlightCreateDto {
         this.finalDestination = finalDestination;
     }
 
-    public String getDuration() {
-        return duration;
+    public Long getMiles() {
+        return miles;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setMiles(Long miles) {
+        this.miles = miles;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public Integer getIdAirplane() {
-        return idAirplane;
-    }
-
-    public void setIdAirplane(Integer idAirplane) {
-        this.idAirplane = idAirplane;
     }
 }

@@ -2,17 +2,35 @@ package dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigDecimal;
+
 public class FlightDto {
 
 
-    private Integer idFlight;
+    private Long flightId;
     private String beginDestination;
     private String finalDestination;
-    private String duration;
-    private int price;
+    private Long miles;
+    private BigDecimal price;
 
-    @JsonProperty("airplane")
-    private AirplaneDto airplaneDto;
+    public FlightDto(Long flightId, String beginDestination, String finalDestination, Long miles, BigDecimal price) {
+        this.flightId = flightId;
+        this.beginDestination = beginDestination;
+        this.finalDestination = finalDestination;
+        this.miles = miles;
+        this.price = price;
+    }
+
+    public FlightDto() {
+    }
+
+    public Long getFlightId() {
+        return flightId;
+    }
+
+    public void setFlightId(Long flightId) {
+        this.flightId = flightId;
+    }
 
     public String getBeginDestination() {
         return beginDestination;
@@ -30,35 +48,19 @@ public class FlightDto {
         this.finalDestination = finalDestination;
     }
 
-    public String getDuration() {
-        return duration;
+    public Long getMiles() {
+        return miles;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setMiles(Long miles) {
+        this.miles = miles;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public AirplaneDto getAirplaneDto() {
-        return airplaneDto;
-    }
-
-    public void setAirplaneDto(AirplaneDto airplaneDto) {
-        this.airplaneDto = airplaneDto;
-    }
-
-    public Integer getIdFlight() {
-        return idFlight;
-    }
-
-    public void setIdFlight(Integer idFlight) {
-        this.idFlight = idFlight;
     }
 }
