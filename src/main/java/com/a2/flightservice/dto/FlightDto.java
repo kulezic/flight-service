@@ -10,7 +10,6 @@ public class FlightDto {
     private Long miles;
     private BigDecimal price;
 
-    private Integer capacity;
 
     public FlightDto() {
     }
@@ -26,7 +25,6 @@ public class FlightDto {
         this.endDestination = endDestination;
         this.miles = miles;
         this.price = price;
-        this.capacity = capacity;
     }
 
     public Long getFlightId() {
@@ -67,13 +65,5 @@ public class FlightDto {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public Integer getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
     }
 }

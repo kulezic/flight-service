@@ -1,5 +1,6 @@
 package com.a2.flightservice.service;
 
+import com.a2.flightservice.dto.FlightCapacityDto;
 import com.a2.flightservice.dto.FlightDto;
 import com.a2.flightservice.dto.FlightCreateDto;
 import org.springframework.data.domain.Page;
@@ -16,4 +17,6 @@ public interface FlightService {
     Page<FlightDto> findAllAvailableFlights();
 
     Page<FlightDto> searchFlights();
+
+    FlightCapacityDto findFlightCapacity(Long flightId);
 }

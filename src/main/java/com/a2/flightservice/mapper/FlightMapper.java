@@ -1,11 +1,22 @@
 package com.a2.flightservice.mapper;
 
+import com.a2.flightservice.domain.Flight;
 import com.a2.flightservice.dto.FlightDto;
 import com.a2.flightservice.exception.NotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FlightMapper {
+
+    public FlightDto flightToFlightDto(Flight flight){
+        FlightDto flightDto = new FlightDto();
+        flightDto.setFlightId(flight.getFlightId());
+        flightDto.setStartDestination(flight.getStartDestination());
+        flightDto.setEndDestination(flight.getEndDestination());
+        flightDto.setMiles(flight.getMiles());
+        flightDto.setPrice(flight.getPrice());
+        return flightDto;
+    }
 
     /*
     private AirplaneRepository airplaneRepository;
