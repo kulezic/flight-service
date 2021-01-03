@@ -11,9 +11,9 @@ public class ControllerErrorHandler {
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<?> handleCustomException(CustomException exception) {
-        //Create error details object based on exception fields
+        //Create error details object based on com.a2.flightservice.exception fields
         ErrorDetails errorDetails = new ErrorDetails(exception.getErrorCode(), exception.getMessage(), Instant.now());
-        //Return error details and map http status from exception
+        //Return error details and map http status from com.a2.flightservice.exception
         return new ResponseEntity<>(errorDetails, exception.getHttpStatus());
     }
 }

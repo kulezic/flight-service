@@ -1,7 +1,6 @@
 package com.a2.flightservice.security;
 
 
-import com.a2.flightservice.security.service.TokenService;
 import io.jsonwebtoken.Claims;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import com.a2.flightservice.security.service.TokenService;
 
 
 import java.lang.reflect.Method;

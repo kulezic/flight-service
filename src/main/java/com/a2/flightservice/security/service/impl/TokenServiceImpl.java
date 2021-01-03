@@ -1,11 +1,11 @@
 package com.a2.flightservice.security.service.impl;
 
-import com.a2.flightservice.security.service.TokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import com.a2.flightservice.security.service.TokenService;
 
 @Service
 public class TokenServiceImpl implements TokenService {

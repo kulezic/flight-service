@@ -1,64 +1,54 @@
-package com.a2.flightservice.dto;
+package dto;
 
-import java.math.BigDecimal;
+import model.Airplane;
+
+import javax.persistence.ManyToOne;
 
 public class FlightCreateDto {
 
-    private String startDestination;
-    private String endDestination;
-    private Long miles;
-    private BigDecimal price;
+    private String beginDestination;
+    private String finalDestination;
+    private String duration;
+    private int price;
+    private Integer idAirplane;
 
-    private Long planeId;
-
-    public FlightCreateDto(String startDestination, String endDestination, Long miles, BigDecimal price, Long planeId) {
-        this.startDestination = startDestination;
-        this.endDestination = endDestination;
-        this.miles = miles;
-        this.price = price;
-        this.planeId = planeId;
+    public String getBeginDestination() {
+        return beginDestination;
     }
 
-    public FlightCreateDto() {
+    public void setBeginDestination(String beginDestination) {
+        this.beginDestination = beginDestination;
     }
 
-    public String getStartDestination() {
-        return startDestination;
+    public String getFinalDestination() {
+        return finalDestination;
     }
 
-    public void setStartDestination(String startDestination) {
-        this.startDestination = startDestination;
+    public void setFinalDestination(String finalDestination) {
+        this.finalDestination = finalDestination;
     }
 
-    public String getEndDestination() {
-        return endDestination;
+    public String getDuration() {
+        return duration;
     }
 
-    public void setEndDestination(String endDestination) {
-        this.endDestination = endDestination;
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
-    public Long getMiles() {
-        return miles;
-    }
-
-    public void setMiles(Long miles) {
-        this.miles = miles;
-    }
-
-    public BigDecimal getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public Long getPlaneId() {
-        return planeId;
+    public Integer getIdAirplane() {
+        return idAirplane;
     }
 
-    public void setPlaneId(Long planeId) {
-        this.planeId = planeId;
+    public void setIdAirplane(Integer idAirplane) {
+        this.idAirplane = idAirplane;
     }
 }

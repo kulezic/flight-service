@@ -6,12 +6,12 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.4.0</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from com.a2.flightservice.repository -->
 	</parent>
 	<groupId>com.a2</groupId>
 	<artifactId>flight-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>flight-service</name>
+	<name>flight-com.a2.flightservice.service</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

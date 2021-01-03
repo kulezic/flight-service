@@ -1,20 +1,23 @@
 package com.a2.flightservice.service;
 
-import com.a2.flightservice.domain.Flight;
-import com.a2.flightservice.dto.FlightCapacityDto;
 import com.a2.flightservice.dto.FlightCreateDto;
 import com.a2.flightservice.dto.FlightDto;
+import com.a2.flightservice.model.Flight;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface FlightService {
 
-    FlightCapacityDto findFlightCapacity(Long flightId);
+    Integer getFlightCapacityByFlightId(Long flightId);
 
-    FlightDto addFlight(FlightCreateDto flightCreateDto);
 
-    Page<FlightDto> findAllAvailableFlights();
+    List<FlightDto> findAll();
 
-    Page<FlightDto> searchFlights();
+    void deleteById(Long id);
 
-    void cancelFlight(Long flightId);
+    FlightDto add(FlightCreateDto flightCreateDto);
+
+    FlightDto findById(Long id);
 }

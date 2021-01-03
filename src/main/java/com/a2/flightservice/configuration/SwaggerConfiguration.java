@@ -27,7 +27,7 @@ public class SwaggerConfiguration {
 
     private ApiInfo metaData() {
         return new ApiInfo("API", "API swagger definition", "1.0.0"
-                , "Terms of service", new Contact("Ana Reljic", "", "areljic3118rn@raf.rs")
+                , "Terms of com.a2.flightservice.service", new Contact("Ana Reljic", "", "areljic3118rn@raf.rs")
                 , "", "", Collections.emptyList());
     }
 
