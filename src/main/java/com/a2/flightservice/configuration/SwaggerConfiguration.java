@@ -1,6 +1,6 @@
 package com.a2.flightservice.configuration;
 
-import controller.FlightController;
+import com.a2.flightservice.controller.FlightController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.RequestHandlerSelectors;
