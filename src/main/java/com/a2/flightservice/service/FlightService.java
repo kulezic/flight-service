@@ -14,7 +14,7 @@ public interface FlightService {
 
     void cancelFlight(Long flightId);
 
-    Page<FlightDto> findAllAvailableFlights();
+    Page<FlightDto> findAllAvailableFlights(Pageable pageable);
 
     Page<FlightDto> searchFlights();
 

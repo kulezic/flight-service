@@ -1,6 +1,7 @@
 package com.a2.flightservice.service.impl;
 
 
+import com.a2.flightservice.client.ticketService.SoldTicketsDto;
 import com.a2.flightservice.domain.Flight;
 import com.a2.flightservice.domain.Plane;
 import com.a2.flightservice.dto.FlightCancelDto;
@@ -16,8 +17,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FlightServiceImpl implements FlightService {
@@ -30,6 +41,8 @@ public class FlightServiceImpl implements FlightService {
 
     private JmsTemplate jmsTemplate;
     private String destinationCancelFlight;
+
+    private RestTemplate ticketServiceRestTemplate;
 
     public FlightServiceImpl(PlaneRepository planeRepository,
                              FlightRepository flightRepository,
@@ -74,8 +87,29 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Page<FlightDto> findAllAvailableFlights() {
-        return null;
+    public Page<FlightDto> findAllAvailableFlights(Pageable pageable) {
+        List<Flight> flights = flightRepository.findAll();
+        List<FlightDto> flightDtos = new ArrayList<>();
+        for( Flight flight : flights){
+            ResponseEntity<SoldTicketsDto> responseEntitySoldTicketsDto = null;
+            try{
+                responseEntitySoldTicketsDto = ticketServiceRestTemplate.exchange("/flight/" + flight.getFlightId(), HttpMethod.GET, null, SoldTicketsDto.class);
+            }catch (HttpClientErrorException e){
+                if(e.getStatusCode().equals(HttpStatus.NOT_FOUND)){
+                    throw  new NotFoundException(String.format("Flight with id: %d not found.",flight.getFlightId()));
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            if(responseEntitySoldTicketsDto.getBody().getSoldTickets() < flight.getPlane().getCapacity()){
+                flightDtos.add(flightMapper.flightToFlightDto(flight));
+            }
+        }
+        int start = (int) pageable.getOffset();
+        int end = (start+pageable.getPageSize())> flightDtos.size() ? flightDtos.size() : (start+pageable.getPageSize());
+        Page<FlightDto> toReturn = new PageImpl<>(flightDtos.subList(start,end), pageable, flightDtos.size());
+        return toReturn;
+
     }
 
     @Override
