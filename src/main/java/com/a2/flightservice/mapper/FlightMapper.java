@@ -5,6 +5,9 @@ import com.a2.flightservice.dto.FlightDto;
 import com.a2.flightservice.exception.NotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class FlightMapper {
 
@@ -16,6 +19,14 @@ public class FlightMapper {
         flightDto.setMiles(flight.getMiles());
         flightDto.setPrice(flight.getPrice());
         return flightDto;
+    }
+
+    public List<FlightDto> flightsToFlightsDto(List<Flight> flights) {
+        List<FlightDto> flightDtos = new ArrayList<>();
+        for(Flight flight: flights){
+            flightDtos.add(flightToFlightDto(flight));
+        }
+        return flightDtos;
     }
 
     /*

@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,9 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import org.springframework.data.jpa.domain.Specification;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,5 +127,16 @@ public class FlightServiceImpl implements FlightService {
         Flight flight = flightRepository.findByFlightId(flightId)
                 .orElseThrow(() -> new NotFoundException(String.format("Flight with id: %d not found.", flightId)));
         return new FlightCapacityDto(flight.getPlane().getCapacity());
+    }
+
+    @Override
+    public Page<FlightDto> findAll(Specification<FlightDto> where, Pageable pageable) {
+        List<Flight> flights = flightRepository.findAll((Sort) Specification.where(where));
+        List<FlightDto> flightDtos = flightMapper.flightsToFlightsDto(flights);
+        int start = (int) pageable.getOffset();
+        int end = (start+pageable.getPageSize())> flightDtos.size() ? flightDtos.size() : (start+pageable.getPageSize());
+        Page<FlightDto> toReturn = new PageImpl<>(flightDtos.subList(start,end), pageable, flightDtos.size());
+        return toReturn;
+
     }
 }
