@@ -10,15 +10,16 @@ import com.a2.flightservice.repository.PlaneRepository;
 import com.a2.flightservice.service.PlaneService;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
 public class PlaneServiceImpl implements PlaneService {
 
-    PlaneRepository planeRepository;
-    FlightRepository flightRepository;
+    private final PlaneRepository planeRepository;
+    private final FlightRepository flightRepository;
 
-    PlaneMapper planeMapper;
+    private final PlaneMapper planeMapper;
 
     public PlaneServiceImpl(PlaneRepository planeRepository,
                             FlightRepository flightRepository,
@@ -31,7 +32,7 @@ public class PlaneServiceImpl implements PlaneService {
 
     //TODO @Valid
     @Override
-    public PlaneDto addPlane(PlaneCreateDto planeCreateDto) {
+    public PlaneDto addPlane(@Valid PlaneCreateDto planeCreateDto) {
         Plane plane = new Plane();
         plane.setCapacity(planeCreateDto.getCapacity());
         Plane rtn = planeRepository.save(plane);

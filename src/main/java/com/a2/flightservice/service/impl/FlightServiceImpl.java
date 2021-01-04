@@ -33,14 +33,14 @@ import java.util.List;
 @Service
 public class FlightServiceImpl implements FlightService {
 
-    private PlaneRepository planeRepository;
-    private FlightRepository flightRepository;
+    private final PlaneRepository planeRepository;
+    private final FlightRepository flightRepository;
 
-    private FlightMapper flightMapper;
-    private ObjectMapper objectMapper;
+    private final FlightMapper flightMapper;
+    private final ObjectMapper objectMapper;
 
-    private JmsTemplate jmsTemplate;
-    private String destinationCancelFlight;
+    private final JmsTemplate jmsTemplate;
+    private final String destinationCancelFlight;
 
     private RestTemplate ticketServiceRestTemplate;
 
@@ -79,6 +79,7 @@ public class FlightServiceImpl implements FlightService {
                 .orElseThrow(() -> new NotFoundException(String.format("Flight with id: %d not found.", flightId)));
         FlightCancelDto flightCancelDto = new FlightCancelDto(flight.getFlightId(), flight.getMiles());
         //TODO Flight status canceled
+        //TODO Delete flight
         try {
             jmsTemplate.convertAndSend(destinationCancelFlight, objectMapper.writeValueAsString(flightCancelDto));
         } catch (JsonProcessingException e) {
