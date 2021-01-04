@@ -119,8 +119,13 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Page<FlightDto> searchFlights() {
-        return null;
+    public Page<FlightDto> searchFlights(Specification<FlightDto> where, Pageable pageable) {
+        List<Flight> flights = flightRepository.findAll((Sort) Specification.where(where));
+        List<FlightDto> flightDtos = flightMapper.flightsToFlightsDto(flights);
+        int start = (int) pageable.getOffset();
+        int end = (start+pageable.getPageSize())> flightDtos.size() ? flightDtos.size() : (start+pageable.getPageSize());
+        Page<FlightDto> toReturn = new PageImpl<>(flightDtos.subList(start,end), pageable, flightDtos.size());
+        return toReturn;
     }
 
     @Override
@@ -130,14 +135,4 @@ public class FlightServiceImpl implements FlightService {
         return new FlightCapacityDto(flight.getPlane().getCapacity());
     }
 
-    @Override
-    public Page<FlightDto> findAll(Specification<FlightDto> where, Pageable pageable) {
-        List<Flight> flights = flightRepository.findAll((Sort) Specification.where(where));
-        List<FlightDto> flightDtos = flightMapper.flightsToFlightsDto(flights);
-        int start = (int) pageable.getOffset();
-        int end = (start+pageable.getPageSize())> flightDtos.size() ? flightDtos.size() : (start+pageable.getPageSize());
-        Page<FlightDto> toReturn = new PageImpl<>(flightDtos.subList(start,end), pageable, flightDtos.size());
-        return toReturn;
-
-    }
 }

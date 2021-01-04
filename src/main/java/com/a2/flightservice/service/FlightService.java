@@ -18,9 +18,8 @@ public interface FlightService {
 
     Page<FlightDto> findAllAvailableFlights(Pageable pageable);
 
-    Page<FlightDto> searchFlights();
+    Page<FlightDto> searchFlights(Specification<FlightDto> where, Pageable pageable);
 
     FlightCapacityDto findFlightCapacity(Long flightId);
 
-    Page<FlightDto> findAll(Specification<FlightDto> where, Pageable pageable);
 }
