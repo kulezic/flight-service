@@ -9,6 +9,7 @@ public class FlightDto {
     private String endDestination;
     private Long miles;
     private BigDecimal price;
+    private PlaneDto planeDto;
 
 
     public FlightDto() {
@@ -65,5 +66,13 @@ public class FlightDto {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public PlaneDto getPlaneDto() {
+        return planeDto;
+    }
+
+    public void setPlaneDto(PlaneDto planeDto) {
+        this.planeDto = planeDto;
     }
 }

@@ -52,7 +52,7 @@ public class FlightController {
         return new ResponseEntity<>(flightService.searchFlights(specs, pageable), HttpStatus.OK);
     }
 
-    @PostMapping("/add/")
+    @PostMapping("/add")
     @CheckSecurity(roles = {"ROLE_ADMIN"})
     public ResponseEntity<FlightDto> addFlight(@RequestHeader("Authorization") String authorization,
                                                @RequestBody FlightCreateDto flightCreateDto){
