@@ -45,7 +45,7 @@ public class FlightMapper {
         flight.setFinalDestination(flightCreateDto.getFinalDestination());
         flight.setDuration(flightCreateDto.getDuration());
         flight.setPrice(flightCreateDto.getPrice());
-        flight.setAirplane(airplaneRepository.findById(flightCreateDto.getIdAirplane())
+        flight.setPlane(airplaneRepository.findById(flightCreateDto.getIdAirplane())
                 .orElseThrow(()->
                         new NotFoundException(String.format("Airplane with id: %d does not exists.",flightCreateDto.getIdAirplane()))));
 
@@ -59,7 +59,7 @@ public class FlightMapper {
         flightDto.setFinalDestination(flight.getFinalDestination());
         flightDto.setDuration(flight.getDuration());
         flightDto.setPrice(flight.getPrice());
-        flightDto.setAirplaneDto(airplaneMapper.airplaneToAirplaneDto(flight.getAirplane()));
+        flightDto.setAirplaneDto(airplaneMapper.airplaneToAirplaneDto(flight.getPlane()));
         return flightDto;
     }
 
