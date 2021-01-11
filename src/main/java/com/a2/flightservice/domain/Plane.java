@@ -12,7 +12,7 @@ public class Plane {
 
     private Integer capacity;
 
-    @OneToMany(mappedBy = "airplane")
+    @OneToMany(mappedBy = "plane")
     private List<Flight> flights;
 
     public Plane(){}
