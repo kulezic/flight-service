@@ -1,5 +1,6 @@
 package com.a2.flightservice.controller;
 
+import com.a2.flightservice.domain.Flight;
 import com.a2.flightservice.dto.FlightCapacityDto;
 import com.a2.flightservice.dto.FlightCreateDto;
 import com.a2.flightservice.dto.FlightDto;
@@ -56,6 +57,12 @@ public class FlightController {
                                              @PathVariable("id") Long id) {
         flightService.cancelFlight(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<FlightDto> getFlightById(
+                                             @PathVariable("id") Long id) {
+        FlightDto flightDto = flightService.findById(id);
+        return new ResponseEntity<>(flightDto,HttpStatus.OK);
     }
 
     @GetMapping("/capacity/{id}")

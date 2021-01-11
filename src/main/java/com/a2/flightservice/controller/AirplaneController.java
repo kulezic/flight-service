@@ -21,7 +21,7 @@ public class AirplaneController {
     }
 
 
-    @PostMapping
+    @PostMapping("/add")
     @CheckSecurity(roles = {"ROLE_ADMIN"})
     public ResponseEntity<PlaneDto> add(@RequestHeader("Authorization") String authorization, @RequestBody @Valid PlaneCreateDto planeCreateDto) {
         return new ResponseEntity<>(planeService.addPlane(planeCreateDto), HttpStatus.CREATED);

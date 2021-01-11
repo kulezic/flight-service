@@ -8,8 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.List;
-
 public interface FlightService {
 
     FlightDto addFlight(FlightCreateDto flightCreateDto);
@@ -22,4 +20,5 @@ public interface FlightService {
 
     FlightCapacityDto findFlightCapacity(Long flightId);
 
+    FlightDto findById(Long id);
 }

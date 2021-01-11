@@ -135,4 +135,11 @@ public class FlightServiceImpl implements FlightService {
         return new FlightCapacityDto(flight.getPlane().getCapacity());
     }
 
+    @Override
+    public FlightDto findById(Long flightId) {
+        Flight flight =  flightRepository.findByFlightId(flightId)
+                .orElseThrow(() -> new NotFoundException(String.format("Flight with id: %d not found.", flightId)));
+        return flightMapper.flightToFlightDto(flight);
+    }
+
 }
