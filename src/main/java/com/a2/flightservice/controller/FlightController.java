@@ -24,7 +24,7 @@ public class FlightController {
     private FlightService flightService;
 
 
-    @PostMapping
+    @GetMapping
     public ResponseEntity<Page<FlightDto>> findAllAvailableFlights(Pageable pageable){
         return new ResponseEntity<>(flightService.findAllAvailableFlights(pageable), HttpStatus.OK);
     }
@@ -32,12 +32,12 @@ public class FlightController {
     public ResponseEntity<List<FlightDto>> findAllAvailableFlights(){
         return new ResponseEntity<>(flightService.findAllAvailableFlightsList(), HttpStatus.OK);
     }
-    @GetMapping
-    public ResponseEntity<Long> countOfFlights(){
-        return new ResponseEntity<>(flightService.getCountOfFlights(),HttpStatus.OK);
-    }
+//    @GetMapping
+//    public ResponseEntity<Long> countOfFlights(){
+//        return new ResponseEntity<>(flightService.getCountOfFlights(),HttpStatus.OK);
+//    }
 
-    @GetMapping("/search/")
+    @GetMapping("/search")
     @CheckSecurity(roles = {"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity<Page<FlightDto>> searchFlights(@RequestHeader("Authorization") String authorization,
                                                           Pageable pageable,
