@@ -5,7 +5,6 @@ import com.a2.flightservice.client.ticketService.SoldTicketsDto;
 import com.a2.flightservice.domain.Flight;
 import com.a2.flightservice.domain.Plane;
 import com.a2.flightservice.dto.FlightCancelDto;
-import com.a2.flightservice.dto.FlightCapacityDto;
 import com.a2.flightservice.dto.FlightCreateDto;
 import com.a2.flightservice.dto.FlightDto;
 import com.a2.flightservice.exception.NotFoundException;
@@ -74,6 +73,7 @@ public class FlightServiceImpl implements FlightService {
         flight.setMiles(flightCreateDto.getMiles());
         flight.setPrice(flightCreateDto.getPrice());
         flight.setPlane(plane);
+        flight.setFlightStatus("ACTIVE");
         Flight rtn = flightRepository.save(flight);
         return flightMapper.flightToFlightDto(rtn);
     }
@@ -84,12 +84,27 @@ public class FlightServiceImpl implements FlightService {
         Flight flight = flightRepository.findByFlightId(flightId)
                 .orElseThrow(() -> new NotFoundException(String.format("Flight with id: %d not found.", flightId)));
         FlightCancelDto flightCancelDto = new FlightCancelDto(flight.getFlightId(), flight.getMiles());
-        //TODO Flight status canceled
-        //TODO Delete flight
-        try {
-            jmsTemplate.convertAndSend(destinationCancelFlight, objectMapper.writeValueAsString(flightCancelDto));
-        } catch (JsonProcessingException e) {
+        ResponseEntity<SoldTicketsDto> responseEntitySoldTicketsDto = null;
+        try{
+            responseEntitySoldTicketsDto = ticketServiceRestTemplate.exchange("/flight/" + flight.getFlightId(), HttpMethod.GET, null, SoldTicketsDto.class);
+        }catch (HttpClientErrorException e){
+            if(e.getStatusCode().equals(HttpStatus.NOT_FOUND)){
+                throw  new NotFoundException(String.format("Flight with id: %d not found.",flight.getFlightId()));
+            }
+        }catch (Exception e){
             e.printStackTrace();
+        }
+
+        if (responseEntitySoldTicketsDto.getBody().getSoldTickets().equals(0)){
+            flightRepository.deleteByFlightId(flightId);
+        }else{
+            flight.setFlightStatus("CANCELED");
+            flightRepository.save(flight);
+            try {
+                jmsTemplate.convertAndSend(destinationCancelFlight, objectMapper.writeValueAsString(flightCancelDto));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -108,7 +123,8 @@ public class FlightServiceImpl implements FlightService {
             }catch (Exception e){
                 e.printStackTrace();
             }
-            if(responseEntitySoldTicketsDto.getBody().getSoldTickets() < flight.getPlane().getCapacity()){
+            if(responseEntitySoldTicketsDto.getBody().getSoldTickets() < flight.getPlane().getCapacity()
+                && flight.getFlightStatus().equals("ACTIVE")){
                 flightDtos.add(flightMapper.flightToFlightDto(flight));
             }
         }
@@ -127,13 +143,6 @@ public class FlightServiceImpl implements FlightService {
         int end = (start+pageable.getPageSize())> flightDtos.size() ? flightDtos.size() : (start+pageable.getPageSize());
         Page<FlightDto> toReturn = new PageImpl<>(flightDtos.subList(start,end), pageable, flightDtos.size());
         return toReturn;
-    }
-
-    @Override
-    public FlightCapacityDto findFlightCapacity(Long flightId) {
-        Flight flight = flightRepository.findByFlightId(flightId)
-                .orElseThrow(() -> new NotFoundException(String.format("Flight with id: %d not found.", flightId)));
-        return new FlightCapacityDto(flight.getPlane().getCapacity());
     }
 
     @Override

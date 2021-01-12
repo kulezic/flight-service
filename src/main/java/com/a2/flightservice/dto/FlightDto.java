@@ -10,7 +10,7 @@ public class FlightDto {
     private Long miles;
     private BigDecimal price;
     private PlaneDto planeDto;
-
+    private String flightStatus;
 
     public FlightDto() {
     }
@@ -20,12 +20,15 @@ public class FlightDto {
                      String endDestination,
                      Long miles,
                      BigDecimal price,
-                     Integer capacity) {
+                     PlaneDto planeDto,
+                     String flightStatus) {
         this.flightId = flightId;
         this.startDestination = startDestination;
         this.endDestination = endDestination;
         this.miles = miles;
         this.price = price;
+        this.planeDto = planeDto;
+        this.flightStatus = flightStatus;
     }
 
     public Long getFlightId() {
@@ -74,5 +77,13 @@ public class FlightDto {
 
     public void setPlaneDto(PlaneDto planeDto) {
         this.planeDto = planeDto;
+    }
+
+    public String getFlightStatus() {
+        return flightStatus;
+    }
+
+    public void setFlightStatus(String flightStatus) {
+        this.flightStatus = flightStatus;
     }
 }

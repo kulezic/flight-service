@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 
 public class FlightCreateDto {
 
-    private Long flightId;
     private String startDestination;
     private String endDestination;
     private Long miles;
@@ -16,13 +15,11 @@ public class FlightCreateDto {
     public FlightCreateDto() {
     }
 
-    public FlightCreateDto(Long flightId,
-                           String startDestination,
+    public FlightCreateDto(String startDestination,
                            String endDestination,
                            Long miles,
                            BigDecimal price,
                            Long planeId) {
-        this.flightId = flightId;
         this.startDestination = startDestination;
         this.endDestination = endDestination;
         this.miles = miles;
@@ -30,13 +27,6 @@ public class FlightCreateDto {
         this.planeId = planeId;
     }
 
-    public Long getFlightId() {
-        return flightId;
-    }
-
-    public void setFlightId(Long flightId) {
-        this.flightId = flightId;
-    }
 
     public String getStartDestination() {
         return startDestination;

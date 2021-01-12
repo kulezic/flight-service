@@ -31,7 +31,6 @@ public class PlaneServiceImpl implements PlaneService {
     }
 
 
-    //TODO @Valid
     @Override
     public PlaneDto addPlane(@Valid PlaneCreateDto planeCreateDto) {
         Plane plane = new Plane();

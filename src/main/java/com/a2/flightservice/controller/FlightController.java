@@ -1,7 +1,5 @@
 package com.a2.flightservice.controller;
 
-import com.a2.flightservice.domain.Flight;
-import com.a2.flightservice.dto.FlightCapacityDto;
 import com.a2.flightservice.dto.FlightCreateDto;
 import com.a2.flightservice.dto.FlightDto;
 import com.a2.flightservice.security.CheckSecurity;
@@ -16,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -71,8 +67,4 @@ public class FlightController {
         return new ResponseEntity<>(flightDto,HttpStatus.OK);
     }
 
-    @GetMapping("/capacity/{id}")
-    public ResponseEntity<FlightCapacityDto> findFlightCapacity(@PathVariable("id") Long id){
-        return new ResponseEntity<>(flightService.findFlightCapacity(id), HttpStatus.OK);
-    }
 }

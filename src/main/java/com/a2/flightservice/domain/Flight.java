@@ -14,6 +14,7 @@ public class Flight {
     private String endDestination;
     private Long miles;
     private BigDecimal price;
+    private String flightStatus;
 
     @ManyToOne
     private Plane plane;
@@ -21,13 +22,20 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(Long flightId, String startDestination, String endDestination, Long miles, BigDecimal price, Plane plane) {
+    public Flight(Long flightId,
+                  String startDestination,
+                  String endDestination,
+                  Long miles,
+                  BigDecimal price,
+                  Plane plane,
+                  String flightStatus) {
         this.flightId = flightId;
         this.startDestination = startDestination;
         this.endDestination = endDestination;
         this.miles = miles;
         this.price = price;
         this.plane = plane;
+        this.flightStatus = flightStatus;
     }
 
     public Long getFlightId() {
@@ -76,5 +84,13 @@ public class Flight {
 
     public void setPlane(Plane plane) {
         this.plane = plane;
+    }
+
+    public String getFlightStatus() {
+        return flightStatus;
+    }
+
+    public void setFlightStatus(String flightStatus) {
+        this.flightStatus = flightStatus;
     }
 }

@@ -10,6 +10,11 @@ import java.util.List;
 
 @Component
 public class FlightMapper {
+    private PlaneMapper planeMapper;
+
+    public FlightMapper(PlaneMapper planeMapper) {
+        this.planeMapper = planeMapper;
+    }
 
     public FlightDto flightToFlightDto(Flight flight){
         FlightDto flightDto = new FlightDto();
@@ -18,6 +23,8 @@ public class FlightMapper {
         flightDto.setEndDestination(flight.getEndDestination());
         flightDto.setMiles(flight.getMiles());
         flightDto.setPrice(flight.getPrice());
+        flightDto.setPlaneDto(planeMapper.planeToPlaneDto(flight.getPlane()));
+        flightDto.setFlightStatus(flight.getFlightStatus());
         return flightDto;
     }
 
