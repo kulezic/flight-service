@@ -3,6 +3,7 @@ package com.a2.flightservice.service.impl;
 import com.a2.flightservice.domain.Plane;
 import com.a2.flightservice.dto.PlaneCreateDto;
 import com.a2.flightservice.dto.PlaneDto;
+import com.a2.flightservice.exception.DeleteForbidden;
 import com.a2.flightservice.exception.NotFoundException;
 import com.a2.flightservice.mapper.PlaneMapper;
 import com.a2.flightservice.repository.FlightRepository;
@@ -45,7 +46,7 @@ public class PlaneServiceImpl implements PlaneService {
                 orElseThrow(() -> new NotFoundException(String.format("Plane with id: %d not found.", planeId)));
         if (flightRepository.findAllByPlane(plane).isEmpty()){
             planeRepository.deleteByPlaneId(planeId);
-        }
+        }else throw new DeleteForbidden("You can not delete already assigned flight");
     }
 
     @Override
