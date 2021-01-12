@@ -54,6 +54,7 @@ public class FlightServiceImpl implements FlightService {
                              FlightMapper flightMapper,
                              ObjectMapper objectMapper,
                              JmsTemplate jmsTemplate,
+            RestTemplate ticketServiceRestTemplate,
                              @Value("${destination.cancel-flight}") String destinationCancelFlight) {
         this.planeRepository = planeRepository;
         this.flightRepository = flightRepository;
@@ -61,6 +62,7 @@ public class FlightServiceImpl implements FlightService {
         this.objectMapper = objectMapper;
         this.jmsTemplate = jmsTemplate;
         this.destinationCancelFlight = destinationCancelFlight;
+        this.ticketServiceRestTemplate = ticketServiceRestTemplate;
     }
 
     @Override
@@ -86,7 +88,8 @@ public class FlightServiceImpl implements FlightService {
         FlightCancelDto flightCancelDto = new FlightCancelDto(flight.getFlightId(), flight.getMiles());
         ResponseEntity<SoldTicketsDto> responseEntitySoldTicketsDto = null;
         try{
-            responseEntitySoldTicketsDto = ticketServiceRestTemplate.exchange("/flight/" + flight.getFlightId(), HttpMethod.GET, null, SoldTicketsDto.class);
+            responseEntitySoldTicketsDto = ticketServiceRestTemplate.exchange("/ticket/flight/" + flight.getFlightId(), HttpMethod.GET, null, SoldTicketsDto.class);
+
         }catch (HttpClientErrorException e){
             if(e.getStatusCode().equals(HttpStatus.NOT_FOUND)){
                 throw  new NotFoundException(String.format("Flight with id: %d not found.",flight.getFlightId()));
@@ -95,7 +98,8 @@ public class FlightServiceImpl implements FlightService {
             e.printStackTrace();
         }
 
-        if (responseEntitySoldTicketsDto.getBody().getSoldTickets().equals(0)){
+        System.out.println(responseEntitySoldTicketsDto.getBody().getSoldTickets() + "SOLD TICKETS");
+        if (responseEntitySoldTicketsDto.getBody().getSoldTickets()==0){
             flightRepository.deleteByFlightId(flightId);
         }else{
             flight.setFlightStatus("CANCELED");
@@ -115,7 +119,7 @@ public class FlightServiceImpl implements FlightService {
         for( Flight flight : flights){
             ResponseEntity<SoldTicketsDto> responseEntitySoldTicketsDto = null;
             try{
-                responseEntitySoldTicketsDto = ticketServiceRestTemplate.exchange("/flight/" + flight.getFlightId(), HttpMethod.GET, null, SoldTicketsDto.class);
+                responseEntitySoldTicketsDto = ticketServiceRestTemplate.exchange("/ticket/flight/" + flight.getFlightId(), HttpMethod.GET, null, SoldTicketsDto.class);
             }catch (HttpClientErrorException e){
                 if(e.getStatusCode().equals(HttpStatus.NOT_FOUND)){
                     throw  new NotFoundException(String.format("Flight with id: %d not found.",flight.getFlightId()));
@@ -123,6 +127,7 @@ public class FlightServiceImpl implements FlightService {
             }catch (Exception e){
                 e.printStackTrace();
             }
+            System.out.println(responseEntitySoldTicketsDto+ " get sold");
             if(responseEntitySoldTicketsDto.getBody().getSoldTickets() < flight.getPlane().getCapacity()
                 && flight.getFlightStatus().equals("ACTIVE")){
                 flightDtos.add(flightMapper.flightToFlightDto(flight));
