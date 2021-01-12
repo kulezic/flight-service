@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.a2.flightservice.security.CheckSecurity;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/airplane")
@@ -32,5 +33,11 @@ public class AirplaneController {
     public ResponseEntity<?> delete(@RequestHeader("Authorization") String authorization, @PathVariable("id") Long id) {
         planeService.deletePlaneById(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping
+    @CheckSecurity(roles = {"ROLE_ADMIN"})
+    public ResponseEntity<List<PlaneDto>> getAllPlanes(@RequestHeader("Authorization") String authorization) {
+        List<PlaneDto> planeDtos = planeService.findAll();
+        return new ResponseEntity<>(planeDtos,HttpStatus.OK);
     }
 }

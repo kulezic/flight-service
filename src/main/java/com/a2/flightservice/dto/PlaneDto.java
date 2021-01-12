@@ -3,13 +3,15 @@ package com.a2.flightservice.dto;
 public class PlaneDto {
 
     private Long planeId;
+    private String name;
     private Integer capacity;
 
     public PlaneDto() {
     }
 
-    public PlaneDto(Long planeId, Integer capacity) {
+    public PlaneDto(Long planeId, String name,Integer capacity) {
         this.planeId = planeId;
+        this.name = name;
         this.capacity = capacity;
     }
 
@@ -27,5 +29,13 @@ public class PlaneDto {
 
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

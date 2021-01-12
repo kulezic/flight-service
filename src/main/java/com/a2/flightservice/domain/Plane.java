@@ -10,6 +10,7 @@ public class Plane {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long planeId;
 
+    private String name;
     private Integer capacity;
 
     @OneToMany(mappedBy = "plane")
@@ -39,6 +40,14 @@ public class Plane {
 
     public void setFlights(List<Flight> flights) {
         this.flights = flights;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 

@@ -11,6 +11,7 @@ public class PlaneMapper {
     public PlaneDto planeToPlaneDto(Plane plane){
         PlaneDto planeDto = new PlaneDto();
         planeDto.setPlaneId(plane.getPlaneId());
+        planeDto.setName(plane.getName());
         planeDto.setCapacity(plane.getCapacity());
         return planeDto;
     }

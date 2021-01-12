@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PlaneServiceImpl implements PlaneService {
@@ -46,6 +47,11 @@ public class PlaneServiceImpl implements PlaneService {
         if (flightRepository.findAllByPlane(plane).isEmpty()){
             planeRepository.deleteByPlaneId(planeId);
         }
+    }
+
+    @Override
+    public List<PlaneDto> findAll() {
+        return planeRepository.findAll().stream().map(planeMapper::planeToPlaneDto).collect(Collectors.toList());
     }
 
 
