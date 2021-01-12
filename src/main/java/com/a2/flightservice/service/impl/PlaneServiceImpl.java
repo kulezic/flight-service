@@ -46,7 +46,9 @@ public class PlaneServiceImpl implements PlaneService {
                 orElseThrow(() -> new NotFoundException(String.format("Plane with id: %d not found.", planeId)));
         if (flightRepository.findAllByPlane(plane).isEmpty()){
             planeRepository.deleteByPlaneId(planeId);
-        }else throw new DeleteForbidden("You can not delete already assigned flight");
+        }else{
+            throw  new DeleteForbidden("You can not delete already assigned plane");
+        }
     }
 
     @Override
