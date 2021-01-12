@@ -34,6 +34,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FlightServiceImpl implements FlightService {
@@ -140,6 +141,16 @@ public class FlightServiceImpl implements FlightService {
         Flight flight =  flightRepository.findByFlightId(flightId)
                 .orElseThrow(() -> new NotFoundException(String.format("Flight with id: %d not found.", flightId)));
         return flightMapper.flightToFlightDto(flight);
+    }
+
+    @Override
+    public Long getCountOfFlights() {
+        return flightRepository.count();
+    }
+
+    @Override
+    public List<FlightDto> findAllAvailableFlightsList() {
+        return flightRepository.findAll().stream().map(flightMapper::flightToFlightDto).collect(Collectors.toList());
     }
 
 }

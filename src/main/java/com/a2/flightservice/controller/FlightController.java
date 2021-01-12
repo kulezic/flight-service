@@ -28,11 +28,17 @@ public class FlightController {
     private FlightService flightService;
 
 
-    @GetMapping
-    @CheckSecurity(roles = {"ROLE_USER", "ROLE_ADMIN"})
-    public ResponseEntity<Page<FlightDto>> findAllAvailableFlights(@RequestHeader("Authorization") String authorization,
-                                                                    Pageable pageable){
+    @PostMapping
+    public ResponseEntity<Page<FlightDto>> findAllAvailableFlights(Pageable pageable){
         return new ResponseEntity<>(flightService.findAllAvailableFlights(pageable), HttpStatus.OK);
+    }
+    @GetMapping("/list")
+    public ResponseEntity<List<FlightDto>> findAllAvailableFlights(){
+        return new ResponseEntity<>(flightService.findAllAvailableFlightsList(), HttpStatus.OK);
+    }
+    @GetMapping
+    public ResponseEntity<Long> countOfFlights(){
+        return new ResponseEntity<>(flightService.getCountOfFlights(),HttpStatus.OK);
     }
 
     @GetMapping("/search/")
